@@ -65,7 +65,7 @@ def fileOperationsGUI():
             merger.write(outfile)
             combined_information_var.set(value=f'Files combined and saved...')
             merger.close()
-            copy_outpath.pack(fill=tk.X, side=tk.TOP, expand=True)
+            copy_outpath.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
 
     combine_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Combine PDFs",
                             command=combineFiles, background="#DCDCDC",
@@ -79,7 +79,7 @@ def fileOperationsGUI():
         pc.copy(outfile)
         combined_information_var.set(value=f'Combined PDF Filepath Copied...')
 
-    copy_outpath = tk.Button(frame_A, borderwidth=3, relief="raised", text="Copy Path To Combined PDF",
+    copy_outpath = tk.Button(frame_A, borderwidth=3, relief="raised", text="Copy Filepath Of Combined PDF",
                             command=copySavePath, background="#DCDCDC",
                             activebackground="#CACACA")
 
