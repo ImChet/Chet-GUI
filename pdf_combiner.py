@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter.filedialog import askopenfilenames
 from PyPDF2 import PdfFileMerger
+import pyperclip as pc
 import sys
 
 
@@ -35,7 +36,6 @@ def fileOperationsGUI():
     def getSaveDir():
         nonlocal save_dir
         save_dir = filedialog.askdirectory()
-        print(f'Save dir is: {save_dir}')
 
     choose_save_dir = tk.Button(frame_A, borderwidth=3, relief="raised", text="Desired Save Directory",
                             command=getSaveDir, background="#DCDCDC",
@@ -45,8 +45,6 @@ def fileOperationsGUI():
 
     def openFile():
         userfiles = askopenfilenames()
-        print(f'Filename(s) raw: {userfiles}')
-        print(f'userfiles type: {type(userfiles)}')
 
         nonlocal merger
         merger = PdfFileMerger()
@@ -57,7 +55,7 @@ def fileOperationsGUI():
         outfile = f'{save_dir}/ChetCombined.pdf'
 
 
-    file_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Open Files",
+    file_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Choose Files",
                             command=openFile, background="#DCDCDC",
                             activebackground="#CACACA")
     file_button.pack(fill=tk.X, side=tk.TOP, expand=True)
@@ -67,6 +65,7 @@ def fileOperationsGUI():
             merger.write(outfile)
             combined_information_var.set(value=f'Files combined and saved...')
             merger.close()
+            copy_outpath.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     combine_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Combine PDFs",
                             command=combineFiles, background="#DCDCDC",
@@ -75,6 +74,14 @@ def fileOperationsGUI():
 
     combined_information = tk.Label(frame_A, textvariable=combined_information_var, font=("Arial", 10, "italic"), relief="flat")
     combined_information.pack(fill=tk.X, side=tk.TOP, expand=True)
+
+    def copySavePath():
+        pc.copy(outfile)
+        combined_information_var.set(value=f'Combined PDF Filepath Copied...')
+
+    copy_outpath = tk.Button(frame_A, borderwidth=3, relief="raised", text="Copy Path To Combined PDF",
+                            command=copySavePath, background="#DCDCDC",
+                            activebackground="#CACACA")
 
     def onWindowClose():
         if messagebox.askyesno("Chet's PDF Combiner", "Are you sure that you want to quit?"):
