@@ -77,9 +77,6 @@ number_checkmark = tk.Checkbutton(frame_B, text='Include Numbers', variable=numb
 number_checkmark.pack(side=tk.TOP, expand=True)
 
 
-# password_display = tk.Label(frame_B, text='Your password is:', font=("Arial", 10, "italic"), borderwidth=5, relief="flat")
-# password_display.pack(side=tk.TOP, expand=True)
-
 password_actual = tk.Label(frame_B, textvariable=password_var, font=("Arial", 10), borderwidth=5, relief="groove", border=1)
 password_actual.pack(side=tk.TOP, expand=True)
 
