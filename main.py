@@ -86,7 +86,6 @@ def createPassword():
     password_var.set(password)
 
 
-# bg="#1F8233" activebackground="#BE1400"
 generate_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Generate Password", command=createPassword, background="#DCDCDC", activebackground="#CACACA")
 generate_password_button.pack(side=tk.LEFT, expand=tk.TRUE, fill=tk.BOTH)
 
@@ -97,7 +96,7 @@ def copyToClipboard():
     if default_value_check is False:
         pc.copy(value)
 
-# bg="#4F67FF" activebackground="#BE1400"
+
 copy_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Copy Password", command=copyToClipboard, background="#DCDCDC", activebackground="#CACACA")
 copy_password_button.pack(side=tk.RIGHT, expand=tk.TRUE, fill=tk.BOTH)
 
