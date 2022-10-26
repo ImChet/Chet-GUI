@@ -1,103 +1,46 @@
 # Imports
-import functions
 import tkinter as tk
-import pyperclip as pc
+from tkinter import messagebox
 
-# Main Window
-main_frame = tk.Tk()
-main_frame.title("Chet GUI")
-main_frame.minsize(350, 300)
-main_frame.maxsize(350, 300)
-main_frame.geometry('350x300')
+import pdf_combiner
+import password_generator
 
-# Variables
-lowercase = tk.BooleanVar(value=True)
-uppercase = tk.BooleanVar(value=True)
-special = tk.BooleanVar(value=True)
-numbers = tk.BooleanVar(value=True)
-length_var = tk.IntVar(value=15)  # Default 15
-password_var = tk.StringVar(value='Generate your password...')
+# Main GUI Window
+main_GUI = tk.Tk()
+main_GUI.withdraw()
+main_GUI.title("Chet\'s GUI Tools")
+main_GUI.minsize(350, 300)
+main_GUI.maxsize(350, 300)
+main_GUI.geometry('350x300')
 
-frame_A = tk.Frame(main_frame)
-frame_A.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
+frame_A = tk.Frame(main_GUI)
+frame_A.pack(fill=tk.BOTH, side=tk.TOP, expand=False)
 
-frame_B = tk.Frame(main_frame)
-frame_B.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
+main_title = tk.Label(frame_A, text='Chet\'s GUI Tools', font=("Arial", 15, "bold"), relief="flat")
+main_title.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
-frame_C = tk.Frame(main_frame)
-frame_C.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
+main_information = tk.Label(frame_A, text='Choose which tool you would like to use:', font=("Arial", 10, "italic"), relief="flat")
+main_information.pack(side=tk.TOP, expand=True)
 
-password_information = tk.Label(frame_A, text='Chet\'s Password Generator', font=("Arial", 15, "bold"), relief="flat")
-password_information.pack(side=tk.TOP, expand=True)
+password_generator_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Password Generator",
+                                      command=lambda: password_generator.passwordGeneratorGUI() & main_GUI.withdraw(), background="#DCDCDC",
+                                      activebackground="#CACACA")
+password_generator_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
-# Options (lowercase, uppercase, special, numbers, length)
-options_information = tk.Label(frame_B, text='Select your password complexity:', font=("Arial", 10, "italic"), relief="flat")
-options_information.pack(side=tk.TOP, expand=True)
-
-length_information = tk.Label(frame_B, text='Desired length:', font=("Arial", 10), relief="flat")
-length_information.pack(side=tk.TOP, expand=True)
-
-length_spinbox = tk.Spinbox(frame_B, from_=1, to=100, textvariable=length_var, font=("Arial", 10, "italic"), justify="center")
-length_spinbox.pack(side=tk.TOP, expand=True)
+pdf_combiner_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="PDF Combiner",
+                                      command=lambda: pdf_combiner.fileOperationsGUI() & main_GUI.withdraw(), background="#DCDCDC",
+                                      activebackground="#CACACA")
+pdf_combiner_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
 
-def setLowercase():
-    value = lowercase.get()
-    return value
+def onWindowClose():
+    if messagebox.askyesno("Chet\'s GUI Tools", "Are you sure that you want to quit?"):
+        main_GUI.destroy()
 
 
-lowercase_checkmark = tk.Checkbutton(frame_B, text='Include Lowercase Characters', variable=lowercase, onvalue=True, offvalue=False, command=setLowercase)
-lowercase_checkmark.pack(side=tk.TOP, expand=True)
+main_GUI.protocol("WM_DELETE_WINDOW", onWindowClose)
 
 
-def setUppercase():
-    value = uppercase.get()
-    return value
-
-
-uppercase_checkmark = tk.Checkbutton(frame_B, text='Include Uppercase Characters', variable=uppercase, onvalue=True, offvalue=False, command=setUppercase)
-uppercase_checkmark.pack(side=tk.TOP, expand=True)
-
-
-def setSpecial():
-    value = special.get()
-    return value
-
-
-special_checkmark = tk.Checkbutton(frame_B, text='Include Special Characters', variable=special, onvalue=True, offvalue=False, command=setSpecial)
-special_checkmark.pack(side=tk.TOP, expand=True)
-
-
-def setNumber():
-    value = numbers.get()
-    return value
-
-
-number_checkmark = tk.Checkbutton(frame_B, text='Include Numbers', variable=numbers, onvalue=True, offvalue=False, command=setNumber)
-number_checkmark.pack(side=tk.TOP, expand=True)
-
-
-password_actual = tk.Label(frame_B, textvariable=password_var, font=("Arial", 10), borderwidth=5, relief="groove", border=1)
-password_actual.pack(side=tk.TOP, expand=True)
-
-
-def createPassword():
-    password = functions.passwordGenerator(setLowercase(), setUppercase(), setSpecial(), setNumber(), length_var.get())
-    password_var.set(password)
-
-
-generate_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Generate Password", command=createPassword, background="#DCDCDC", activebackground="#CACACA")
-generate_password_button.pack(side=tk.LEFT, expand=tk.TRUE, fill=tk.BOTH)
-
-
-def copyToClipboard():
-    value = str(password_var.get())
-    default_value_check = value == 'Generate your password...'
-    if default_value_check is False:
-        pc.copy(value)
-
-
-copy_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Copy Password", command=copyToClipboard, background="#DCDCDC", activebackground="#CACACA")
-copy_password_button.pack(side=tk.RIGHT, expand=tk.TRUE, fill=tk.BOTH)
-
-main_frame.mainloop()
+if __name__ == '__main__':
+    main_GUI.deiconify()
+    main_GUI.mainloop()
