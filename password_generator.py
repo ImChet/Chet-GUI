@@ -1,7 +1,7 @@
 import random
 import tkinter as tk
 from tkinter import messagebox
-
+import sys
 import pyperclip as pc
 
 
@@ -89,6 +89,7 @@ def passwordGeneratorGUI():
     def onWindowClose():
         if messagebox.askyesno("Chet's Password Generator", "Are you sure that you want to quit?"):
             main_frame.destroy()
+            sys.exit()
 
     # Labels and Buttons // Options (lowercase, uppercase, special, numbers, length)
     password_information = tk.Label(frame_A, text='Chet\'s Password Generator', font=("Arial", 15, "bold"), relief="flat")

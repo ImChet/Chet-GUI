@@ -1,6 +1,7 @@
 # Imports
 import tkinter as tk
 from tkinter import messagebox
+import sys
 
 import pdf_combiner
 import password_generator
@@ -23,12 +24,12 @@ main_information = tk.Label(frame_A, text='Choose which tool you would like to u
 main_information.pack(side=tk.TOP, expand=True)
 
 password_generator_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Password Generator",
-                                      command=lambda: password_generator.passwordGeneratorGUI() & main_GUI.withdraw(), background="#DCDCDC",
+                                      command=lambda: exec(f'{password_generator.passwordGeneratorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
 password_generator_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
 pdf_combiner_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="PDF Combiner",
-                                      command=lambda: pdf_combiner.fileOperationsGUI() & main_GUI.withdraw(), background="#DCDCDC",
+                                      command=lambda: exec(f'{pdf_combiner.fileOperationsGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
 pdf_combiner_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
@@ -36,7 +37,7 @@ pdf_combiner_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 def onWindowClose():
     if messagebox.askyesno("Chet\'s GUI Tools", "Are you sure that you want to quit?"):
         main_GUI.destroy()
-
+        sys.exit()
 
 main_GUI.protocol("WM_DELETE_WINDOW", onWindowClose)
 

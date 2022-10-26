@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter.filedialog import askopenfilenames
 from PyPDF2 import PdfFileMerger
+import sys
 
 
 def fileOperationsGUI():
@@ -78,6 +79,7 @@ def fileOperationsGUI():
     def onWindowClose():
         if messagebox.askyesno("Chet's PDF Combiner", "Are you sure that you want to quit?"):
             main_frame.destroy()
+            sys.exit()
 
     main_frame.protocol("WM_DELETE_WINDOW", onWindowClose)
     main_frame.grab_set()
