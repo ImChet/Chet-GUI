@@ -16,30 +16,35 @@ main_GUI.minsize(350, 300)
 main_GUI.maxsize(350, 300)
 main_GUI.geometry('350x300')
 
-# Creates the frame to work in
-frame_A = tk.Frame(main_GUI)
-frame_A.pack(fill=tk.BOTH, side=tk.TOP, expand=False)
+# Grid configurations
+main_GUI.grid_rowconfigure(0, weight=1)
+main_GUI.grid_columnconfigure(0, weight=1)
+main_GUI.grid_rowconfigure(1, weight=1)
+# main_GUI.grid_columnconfigure(1, weight=1)
+main_GUI.grid_rowconfigure(2, weight=1)
+# main_GUI.grid_columnconfigure(2, weight=1)
+main_GUI.grid_rowconfigure(3, weight=1)
+# main_GUI.grid_columnconfigure(3, weight=1)
 
 # Sets up the title label for the main GUI window
-main_title = tk.Label(frame_A, text='Chet\'s GUI Tools', font=("Arial", 15, "bold"), relief="flat")
-main_title.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
+main_title = tk.Label(main_GUI, text='Chet\'s GUI Tools', font=("Arial", 15, "bold"), relief="flat")
+main_title.grid(row=0, column=0, sticky=tk.EW)
 
 # Sets up the informational label for the main GUI window
-main_information = tk.Label(frame_A, text='Choose which tool you would like to use:', font=("Arial", 10, "italic"), relief="flat")
-main_information.pack(side=tk.TOP, expand=True)
+main_information = tk.Label(main_GUI, text='Choose which tool you would like to use:', font=("Arial", 10, "italic"), relief="flat")
+main_information.grid(row=1, column=0, sticky=tk.EW)
 
 # Sets up the button that leads to the password generator GUI
-password_generator_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Password Generator",
+password_generator_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Password Generator",
                                       command=lambda: exec(f'{password_generator.passwordGeneratorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
-password_generator_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
+password_generator_button.grid(row=2, column=0, sticky=tk.EW)
 
 # Sets up the button that leads to the PDF combiner GUI
-pdf_combiner_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="PDF Combiner",
+pdf_combiner_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="PDF Combiner",
                                       command=lambda: exec(f'{pdf_combiner.fileOperationsGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
-pdf_combiner_button.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
-
+pdf_combiner_button.grid(row=3, column=0, sticky=tk.EW)
 
 # Called when the window is closed
 def onWindowClose():
