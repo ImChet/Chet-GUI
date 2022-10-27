@@ -31,7 +31,6 @@ def fileOperationsGUI():
     main_title.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     # Variables
-    combined_information_var = tk.StringVar(value='')
     hint_information_var = tk.StringVar(value='Select where you would like your combined PDF file to save...')
     save_dir = ''
     outfile = ''
@@ -39,6 +38,8 @@ def fileOperationsGUI():
     userfiles_list_cleaned = []
     selected_order_list = []
     item_selected_index = 0
+    length_listbox1_populated = 0
+    clicked_item_counter = 0
 
     # Information about PDF combiner
     main_information = tk.Label(frame_A, textvariable=hint_information_var, font=("Arial", 10, "italic"),
@@ -69,7 +70,7 @@ def fileOperationsGUI():
     original_order_information.grid(row=0, column=0, columnspan=1, sticky=tk.NS)
 
     # Shows the selected order of chosen files // Shown when files are chosen
-    reordered_information = tk.Label(frame_B, text='Selected Order:',
+    reordered_information = tk.Label(frame_B, text='Desired Order:',
                                           font=("Arial", 8, "underline"), relief="flat")
     reordered_information.grid(row=0, column=1, columnspan=1, sticky=tk.NS)
 
@@ -78,29 +79,44 @@ def fileOperationsGUI():
     frame_B.grid_columnconfigure(0, weight=1)
     frame_B.grid_rowconfigure(1, weight=1)
     frame_B.grid_columnconfigure(1, weight=1)
-    listbox1 = tk.Listbox(frame_B)
-    listbox2 = tk.Listbox(frame_B)
+    listbox1 = tk.Listbox(frame_B, selectmode=tk.SINGLE)
+    listbox2 = tk.Listbox(frame_B, exportselection=False)
     listbox1.grid(row=1, column=0, sticky=tk.EW)
     listbox2.grid(row=1, column=1, sticky=tk.EW)
 
     # Called when an item in the listboxes are clicked on
     def onSelect(event):
+
+        nonlocal clicked_item_counter
         nonlocal item_selected_index
         nonlocal selected_order_list
+        clicked_item_counter += 1
 
-        w = event.widget
-        item_selected = w.curselection()[0]
-        # Gets the index of the item selected from the original file order
-        item_selected_index = int(item_selected)
-        # Inserts the cleaned filename of the selected item in the desired order listbox
-        indexed_userfiles_list_raw = userfiles_list_cleaned[item_selected_index]
-        listbox2.insert("end", indexed_userfiles_list_raw)
-        # Inserts the index of the selected item into a list for future use
-        selected_order_list.insert(len(selected_order_list), item_selected_index)
-        # Updates Hint
-        hint_information_var.set(value='When you have selected the combination order you want, combine your files...')
-        # Spawn Combine PDF Button
-        combine_button.pack(fill=tk.X, side=tk.TOP, expand=True)
+        # Ensures that the listbox1 is not clicked on more than it should be and throw errors
+        if clicked_item_counter <= length_listbox1_populated:
+
+            w = event.widget
+            item_selected = w.curselection()[0]
+            # Gets the index of the item selected from the original file order
+            item_selected_index = int(item_selected)
+            # Inserts the cleaned filename of the selected item in the desired order listbox
+            indexed_userfiles_list_cleaned = userfiles_list_cleaned[item_selected_index]
+            listbox2.insert("end", indexed_userfiles_list_cleaned)
+
+            # Locate the selected item from listbox1 so that users don't click on the same file twice
+            item = indexed_userfiles_list_cleaned
+            located_index = listbox1.get(0, tk.END).index(item)
+            listbox1.delete(located_index)
+
+            # Inserts the index of the selected item into a list for future use
+            selected_order_list.insert(len(selected_order_list), item_selected_index)
+            # Updates Hint
+            hint_information_var.set(value='When you have selected the combination order you want, combine your files...')
+            # Spawn Combine PDF Button
+            combine_button.pack(fill=tk.X, side=tk.TOP, expand=True)
+        # Disables the listbox1 when click limit reached
+        else:
+            listbox1.configure(exportselection=False)
 
     # Called when choose files button is pressed
     def openFile():
@@ -112,6 +128,8 @@ def fileOperationsGUI():
         nonlocal userfiles_list_cleaned
         nonlocal userfiles_list_raw
         nonlocal outfile
+        nonlocal length_listbox1_populated
+
         # Sets the outfile with the previously obtained save directory location
         outfile = f'{save_dir}/ChetCombined.pdf'
 
@@ -121,6 +139,8 @@ def fileOperationsGUI():
             userfiles_list_raw.insert(len(userfiles_list_raw), os.path.abspath(file))
             # Inserts the cleaned filename of each file to list for future use
             userfiles_list_cleaned.insert(len(userfiles_list_cleaned), os.path.basename(file)[:-4])
+
+        length_listbox1_populated = len(userfiles_list_cleaned)
 
         # Loops from the cleaned filename list
         for item in userfiles_list_cleaned:
