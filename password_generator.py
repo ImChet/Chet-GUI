@@ -1,10 +1,12 @@
 import random
+import sys
 import tkinter as tk
 from tkinter import messagebox
-import sys
+
 import pyperclip as pc
 
 
+# Function that creates the randomized password
 def passwordGenerator(lowercase_include: bool,
                       uppercase_include: bool,
                       special_include: bool,
@@ -20,7 +22,7 @@ def passwordGenerator(lowercase_include: bool,
     numbers_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     initial_list = []
 
-    # Options add to chosen
+    # Options to add to the list for password to be generated off of
     if lowercase_include:
         initial_list = initial_list + lowercase_list
     if uppercase_include:
@@ -35,20 +37,24 @@ def passwordGenerator(lowercase_include: bool,
     return password
 
 
+# Sets up the password generator GUI
 def passwordGeneratorGUI():
-    # Main Window Setup
+    # Spawns a new window
     main_frame = tk.Toplevel()
+    # Sets the title of the window
     main_frame.title("Chet\'s Password Generator")
+    # Sets up the size of the window
     main_frame.minsize(350, 300)
     main_frame.maxsize(350, 300)
     main_frame.geometry('350x300')
 
+    # Sets up the frame for the title of the window
     frame_A = tk.Frame(main_frame)
     frame_A.pack(fill=tk.BOTH, side=tk.TOP, expand=False)
-
+    # Sets up the frame for the user password options
     frame_B = tk.Frame(main_frame)
     frame_B.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
-
+    # Sets up the frame for the generate password and copy password filepath buttons
     frame_C = tk.Frame(main_frame)
     frame_C.pack(fill=tk.BOTH, side=tk.TOP, expand=False)
 
@@ -60,6 +66,7 @@ def passwordGeneratorGUI():
     length_var = tk.IntVar(value=15)  # Default 15
     password_var = tk.StringVar(value='Generate your password...')
 
+    # Functions to get and set user options for password generations
     def setLowercase():
         value = lowercase.get()
         return value
@@ -76,19 +83,24 @@ def passwordGeneratorGUI():
         value = numbers.get()
         return value
 
+    # Called when user clicks the generate password button
     def createPassword():
         password = passwordGenerator(setLowercase(), setUppercase(), setSpecial(), setNumber(), length_var.get())
         password_var.set(password)
 
+    # Called when user clicks the copy password button
     def copyToClipboard():
         value = str(password_var.get())
         default_value_check = value == 'Generate your password...'
         if default_value_check is False:
             pc.copy(value)
 
+    # Called when the window is closed
     def onWindowClose():
         if messagebox.askyesno("Chet's Password Generator", "Are you sure that you want to quit?"):
+            # Kills the window
             main_frame.destroy()
+            # Closes the program entirely
             sys.exit()
 
     # Labels and Buttons // Options (lowercase, uppercase, special, numbers, length)
@@ -125,5 +137,7 @@ def passwordGeneratorGUI():
     copy_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Copy Password", command=copyToClipboard, background="#DCDCDC", activebackground="#CACACA")
     copy_password_button.pack(side=tk.RIGHT, expand=tk.TRUE, fill=tk.BOTH)
 
+    # Sets up a binding for when window is closed to call onWindowClose function
     main_frame.protocol("WM_DELETE_WINDOW", onWindowClose)
+    # Keeps the password generator window on top
     main_frame.grab_set()
