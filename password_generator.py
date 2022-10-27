@@ -1,5 +1,6 @@
 import random
 import sys
+import time
 import tkinter as tk
 from tkinter import messagebox
 
@@ -88,11 +89,13 @@ def passwordGeneratorGUI():
         password = passwordGenerator(setLowercase(), setUppercase(), setSpecial(), setNumber(), length_var.get())
         password_var.set(password)
 
+
     # Called when user clicks the copy password button
     def copyToClipboard():
         value = str(password_var.get())
         default_value_check = value == 'Generate your password...'
         if default_value_check is False:
+            password_var.set(value='Password Copied...')
             pc.copy(value)
 
     # Called when the window is closed
@@ -134,7 +137,7 @@ def passwordGeneratorGUI():
     generate_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Generate Password", command=createPassword, background="#DCDCDC", activebackground="#CACACA")
     generate_password_button.pack(side=tk.LEFT, expand=tk.TRUE, fill=tk.BOTH)
 
-    copy_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text="Copy Password", command=copyToClipboard, background="#DCDCDC", activebackground="#CACACA")
+    copy_password_button = tk.Button(frame_C, borderwidth=3, relief="raised", text='Copy Password', command=copyToClipboard, background="#DCDCDC", activebackground="#CACACA")
     copy_password_button.pack(side=tk.RIGHT, expand=tk.TRUE, fill=tk.BOTH)
 
     # Sets up a binding for when window is closed to call onWindowClose function
