@@ -188,8 +188,10 @@ def fileOperationsGUI():
                             command=copySavePath, background="#DCDCDC",
                             activebackground="#CACACA")
 
+    # Called when the refresh button is called
     def refreshFunction():
         main_frame.destroy()
+        # Recursion if called
         fileOperationsGUI()
 
     # Sets up the refresh button
