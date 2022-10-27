@@ -20,7 +20,7 @@ def fileOperationsGUI():
 
     # Buttons
     frame_A = tk.Frame(main_frame)
-    frame_A.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+    frame_A.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     # Desired order of combinations // Packed when files are chosen
     frame_B = tk.Frame(main_frame)
@@ -30,13 +30,9 @@ def fileOperationsGUI():
                                     relief="flat")
     main_title.pack(fill=tk.X, side=tk.TOP, expand=True)
 
-    # Information about PDF combiner
-    main_information = tk.Label(frame_A, text='Choose what files to combine:', font=("Arial", 10, "italic"),
-                                   relief="flat")
-    main_information.pack(fill=tk.X, side=tk.TOP, expand=True)
-
     # Variables
     combined_information_var = tk.StringVar(value='')
+    hint_information_var = tk.StringVar(value='Select where you would like your combined PDF file to save...')
     save_dir = ''
     outfile = ''
     userfiles_list_raw = []
@@ -44,11 +40,22 @@ def fileOperationsGUI():
     selected_order_list = []
     item_selected_index = 0
 
+    # Information about PDF combiner
+    main_information = tk.Label(frame_A, textvariable=hint_information_var, font=("Arial", 10, "italic"),
+                                relief="flat")
+    main_information.pack(fill=tk.X, side=tk.TOP, expand=True)
+
     # Gets the desired directory to output the combined file to
     def getSaveDir():
         nonlocal save_dir
         # Prompts the user to select a directory/folder in the file explorer
         save_dir = filedialog.askdirectory()
+        # Updates hint
+        hint_information_var.set(value='Choose what files to combine...')
+        # Shows the choose file button
+        file_button.pack(fill=tk.X, side=tk.TOP, expand=True)
+        # Delete the select save directory button
+        choose_save_dir.destroy()
 
     # Choose save directory button
     choose_save_dir = tk.Button(frame_A, borderwidth=3, relief="raised", text="Desired Save Directory",
@@ -56,25 +63,25 @@ def fileOperationsGUI():
                             activebackground="#CACACA")
     choose_save_dir.pack(fill=tk.X, side=tk.TOP, expand=True)
 
-    # Information about choosing the desired order of PDF combination // Shown when files are chosen
-    file_combo_order_information = tk.Label(frame_B, text='Click the order in which you want your PDFs to combine:', font=("Arial", 10, "italic"), relief="flat")
-    file_combo_order_information.grid(row=0, column=0, columnspan=2, sticky=tk.NS)
-
     # Shows the current order of chosen files // Shown when files are chosen
     original_order_information = tk.Label(frame_B, text='Current Order:',
                                             font=("Arial", 8, "underline"), relief="flat")
-    original_order_information.grid(row=1, column=0, columnspan=1, sticky=tk.NS)
+    original_order_information.grid(row=0, column=0, columnspan=1, sticky=tk.NS)
 
     # Shows the selected order of chosen files // Shown when files are chosen
     reordered_information = tk.Label(frame_B, text='Selected Order:',
                                           font=("Arial", 8, "underline"), relief="flat")
-    reordered_information.grid(row=1, column=1, columnspan=1, sticky=tk.NS)
+    reordered_information.grid(row=0, column=1, columnspan=1, sticky=tk.NS)
 
     # Sets up the listboxes for desired ordering of PDF combinations
+    frame_B.grid_rowconfigure(0, weight=1)
+    frame_B.grid_columnconfigure(0, weight=1)
+    frame_B.grid_rowconfigure(1, weight=1)
+    frame_B.grid_columnconfigure(1, weight=1)
     listbox1 = tk.Listbox(frame_B)
     listbox2 = tk.Listbox(frame_B)
-    listbox1.grid(row=2, column=0, sticky=tk.EW)
-    listbox2.grid(row=2, column=1, sticky=tk.EW)
+    listbox1.grid(row=1, column=0, sticky=tk.EW)
+    listbox2.grid(row=1, column=1, sticky=tk.EW)
 
     # Called when an item in the listboxes are clicked on
     def onSelect(event):
@@ -90,11 +97,15 @@ def fileOperationsGUI():
         listbox2.insert("end", indexed_userfiles_list_raw)
         # Inserts the index of the selected item into a list for future use
         selected_order_list.insert(len(selected_order_list), item_selected_index)
+        # Updates Hint
+        hint_information_var.set(value='When you have selected the combination order you want, combine your files...')
         # Spawn Combine PDF Button
         combine_button.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     # Called when choose files button is pressed
     def openFile():
+        # Delete the choose files button
+        file_button.destroy()
         # Prompts the user to select multiple files in the file explorer
         userfiles = askopenfilenames()
 
@@ -116,22 +127,26 @@ def fileOperationsGUI():
             # Inserts each cleaned filename into listbox1
             listbox1.insert("end", item)
 
+        # Updates hint
+        hint_information_var.set(value='Click the order in which you want your PDFs to combine...')
         # Builds the new frame that houses the desired ordering of the PDF combiner
-        frame_B.pack(fill=tk.BOTH, side=tk.BOTTOM, expand=True)
+        frame_B.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
         # Binds the selection of listbox items to the onSelect function
         listbox1.bind('<<ListboxSelect>>', lambda event: exec(f'{onSelect(event)}'))
 
-    # The setup for the choose files button
+    # The setup for the choose files button // Hidden until user selects a save directory
     file_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Choose Files",
                             command=openFile, background="#DCDCDC",
                             activebackground="#CACACA")
-    file_button.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     # Called when combine files button pressed // Shows when <= 1 item is selected in the desired order of combination
     def combineFiles():
         # Checks that the user has selected a save directory
         if save_dir != '':
-
+            # Delete the combine files button
+            combine_button.destroy()
+            # Forgets/removes the frame housing the desired ordering
+            frame_B.pack_forget()
             correct_order_list = []
             # Creates the PDF file merger
             merger = PdfFileMerger()
@@ -147,8 +162,8 @@ def fileOperationsGUI():
 
             # Writes / Saves the combined PDF to the {outfile} location
             merger.write(outfile)
-            # Updates the combined information text variable
-            combined_information_var.set(value=f'Files combined and saved...')
+            # Updates Hint
+            hint_information_var.set(value='Files combined and saved.\nCopy the filepath to your new file.')
             # Closes the PDF merger
             merger.close()
             # Shows the copy combined filepath button
@@ -159,20 +174,28 @@ def fileOperationsGUI():
                             command=combineFiles, background="#DCDCDC",
                             activebackground="#CACACA")
 
-    # Sets up the combined files information label
-    combined_information = tk.Label(frame_A, textvariable=combined_information_var, font=("Arial", 10, "italic"), relief="flat")
-    combined_information.pack(fill=tk.X, side=tk.TOP, expand=True)
-
     # Called when user clicks the copy combined filepath button
     def copySavePath():
+        # Delete the copy combined PDF filepath button
+        copy_outpath.destroy()
+        # Updates Hint
+        hint_information_var.set(value='Filepath copied to your clipboard successfully.\nIf you wish to combine more PDFs, click the \'Refresh PDF Combiner\' button.')
         pc.copy(outfile)
-        # Updates the combined_information_var when copy combined filepath button is pressed
-        combined_information_var.set(value=f'Combined PDF Filepath Copied...')
+        refresh_button.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
 
     # Sets up the copy combined filepath button
     copy_outpath = tk.Button(frame_A, borderwidth=3, relief="raised", text="Copy Filepath Of Combined PDF",
                             command=copySavePath, background="#DCDCDC",
                             activebackground="#CACACA")
+
+    def refreshFunction():
+        main_frame.destroy()
+        fileOperationsGUI()
+
+    # Sets up the refresh button
+    refresh_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Refresh PDF Combiner",
+                             command=refreshFunction, background="#DCDCDC",
+                             activebackground="#CACACA")
 
     # Called when the window is closed
     def onWindowClose():
