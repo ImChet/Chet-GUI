@@ -44,6 +44,7 @@ def fileOperationsGUI():
     userfiles_list_cleaned = []
     selected_order_list = []
     selected_index = 0
+    file_selected_counter = 0
     seen_items = set([])
 
     # Information about PDF combiner
@@ -95,6 +96,7 @@ def fileOperationsGUI():
         nonlocal selected_index
         nonlocal seen_items
         nonlocal selected_order_list
+        nonlocal file_selected_counter
 
         # Starts the event widget
         w = event.widget
@@ -112,6 +114,7 @@ def fileOperationsGUI():
         if user_selected not in seen_items and user_selected != '✓':
             seen_items.add(user_selected)
             listbox2.insert("end", user_selected)
+            file_selected_counter += 1
 
         # Checks that the item is in listbox2 and that the item is not already assigned the '✓' value
         if user_selected in listbox2.get(0, listbox2.size()) and user_selected != '✓':
@@ -122,7 +125,7 @@ def fileOperationsGUI():
         selected_order_list.insert(len(selected_order_list), int(selected_index))
 
         # Updates Hint
-        hint_information_var.set(value='Select the order that you want your files to combine.')
+        hint_information_var.set(value=f'Select the order that you want your files to combine.\nFiles selected to combine: {file_selected_counter}/{len(userfiles_list_cleaned)}')
 
         # This gets triggered when all the files provided by the user have been assigned an order to combine
         if listbox2.size() == len(userfiles_list_cleaned):
@@ -161,7 +164,7 @@ def fileOperationsGUI():
             listbox1.insert("end", item)
 
         # Updates hint
-        hint_information_var.set(value='Double-click the order in which you want your PDFs to combine...')
+        hint_information_var.set(value=f'Select the order that you want your files to combine.\nFiles selected to combine: {file_selected_counter}/{len(userfiles_list_cleaned)}')
         # Builds the new frame that houses the desired ordering of the PDF combiner
         frame_B.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
 
