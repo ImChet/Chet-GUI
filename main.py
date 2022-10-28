@@ -7,6 +7,8 @@ import pdf_combiner
 
 # Creates the main GUI window
 main_GUI = tk.Tk()
+# Sets the Chet logo
+main_GUI.iconbitmap("chet-logo.ico")
 # Hides the main GUI until it is completely setup
 main_GUI.withdraw()
 # Sets the title of the window

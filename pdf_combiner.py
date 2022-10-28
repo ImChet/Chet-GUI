@@ -11,6 +11,8 @@ import sys
 def fileOperationsGUI():
     # Spawns a new window
     main_frame = tk.Toplevel()
+    # Sets the Chet logo
+    main_frame.iconbitmap("chet-logo.ico")
     # Sets the title of the window
     main_frame.title("Chet\'s PDF Combiner")
     # Sets up the size of the window
