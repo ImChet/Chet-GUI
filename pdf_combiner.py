@@ -16,9 +16,9 @@ def fileOperationsGUI():
     # Sets the title of the window
     main_frame.title("Chet\'s PDF Combiner")
     # Sets up the size of the window
-    main_frame.minsize(380, 280)
-    main_frame.maxsize(380, 280)
-    main_frame.geometry('380x280')
+    main_frame.minsize(400, 280)
+    main_frame.maxsize(400, 280)
+    main_frame.geometry('400x280')
 
     # Buttons
     frame_A = tk.Frame(main_frame)
