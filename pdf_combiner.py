@@ -38,6 +38,7 @@ def fileOperationsGUI():
 
     # Variables
     hint_information_var = tk.StringVar(value='Select where your file will save...')
+    filepath_label_var = tk.StringVar(value='')
     save_dir = ''
     outfile = ''
     userfiles_list_raw = []
@@ -147,9 +148,11 @@ def fileOperationsGUI():
         nonlocal userfiles_list_cleaned
         nonlocal userfiles_list_raw
         nonlocal outfile
+        nonlocal filepath_label_var
 
         # Sets the outfile with the previously obtained save directory location
         outfile = f'{save_dir}/ChetCombined.pdf'
+        filepath_label_var.set(value=outfile)
 
         # Loops through the chosen files
         for file in userfiles:
@@ -200,11 +203,17 @@ def fileOperationsGUI():
             # Writes / Saves the combined PDF to the {outfile} location
             merger.write(outfile)
             # Updates Hint
-            hint_information_var.set(value='Files combined and saved.\nCopy the filepath to your new file.')
+            hint_information_var.set(value='Combined PDF saved successfully.\nCopy the filepath to your new file and/or start over.\n')
             # Closes the PDF merger
             merger.close()
+            # Shows the filepath as text
+            filepath_label.pack(side=tk.TOP, expand=True)
+            # Adds an aesthetic blank spacer
+            blank_spacer_label.pack(side=tk.TOP, expand=True)
             # Shows the copy combined filepath button
-            copy_outpath.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
+            copy_outpath.pack(fill=tk.X, side=tk.TOP, expand=True)
+            # Shows the window refresh button
+            refresh_button.pack(fill=tk.X, side=tk.TOP, expand=True)
 
     # Sets up the combined files button
     combine_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Combine PDFs",
@@ -213,17 +222,21 @@ def fileOperationsGUI():
 
     # Called when user clicks the copy combined filepath button
     def copySavePath():
-        # Delete the copy combined PDF filepath button
+        # Delete the copy combined PDF filepath button / filepath text / blank spacer
         copy_outpath.destroy()
+        filepath_label.destroy()
+        blank_spacer_label.destroy()
         # Updates Hint
         hint_information_var.set(value='Filepath copied to your clipboard successfully.\nTo combine more PDFs, refresh the window.')
         pc.copy(outfile)
-        refresh_button.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
 
     # Sets up the copy combined filepath button
     copy_outpath = tk.Button(frame_A, borderwidth=3, relief="raised", text="Copy Filepath Of Combined PDF",
                             command=copySavePath, background="#DCDCDC",
                             activebackground="#CACACA")
+
+    filepath_label = tk.Label(frame_A, textvariable=filepath_label_var, borderwidth=5, relief="groove", border=1)
+    blank_spacer_label = tk.Label(frame_A, relief="flat", border=0)
 
     # Called when the refresh button is called
     def refreshFunction():
