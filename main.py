@@ -9,8 +9,6 @@ import pdf_combiner
 main_GUI = tk.Tk()
 # Sets the Chet logo
 main_GUI.iconbitmap("chet-logo.ico")
-# Hides the main GUI until it is completely setup
-main_GUI.withdraw()
 # Sets the title of the window
 main_GUI.title("Chet\'s GUI Tools")
 # Sets up the size of the window
@@ -61,5 +59,4 @@ def onWindowClose():
 main_GUI.protocol("WM_DELETE_WINDOW", onWindowClose)
 
 if __name__ == '__main__':
-    main_GUI.deiconify()
     main_GUI.mainloop()

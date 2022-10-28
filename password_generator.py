@@ -42,6 +42,10 @@ def passwordGenerator(lowercase_include: bool,
 def passwordGeneratorGUI():
     # Spawns a new window
     main_frame = tk.Toplevel()
+    # Pulls the window to the front
+    main_frame.attributes('-topmost', 1)
+    main_frame.update()
+    main_frame.attributes('-topmost', 0)
     # Sets the Chet logo
     main_frame.iconbitmap("chet-logo.ico")
     # Sets the title of the window
