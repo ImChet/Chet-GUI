@@ -154,7 +154,7 @@ def fileOperationsGUI():
                 pdf_check = False
         # If not PDF, allow them to retry
         if not pdf_check:
-            hint_information_var.set(value=f'One or more file(s) you selected are not a PDF.\nTry again:')
+            hint_information_var.set(value=f'One or more file(s) you selected were not a PDF.\nTry again:')
         # If all attachments are a .pdf, proceed
         elif pdf_check:
             # Delete the choose files button
