@@ -4,13 +4,15 @@ from tkinter import messagebox
 
 import password_generator
 import pdf_combiner
+from calculator import calculatorGUI
 
 # Creates the main GUI window
 main_GUI = tk.Tk()
 # Sets the Chet logo
 main_GUI.iconbitmap("chet-logo.ico")
 # Sets the title of the window
-main_GUI.title("Chet\'s GUI Tools")
+# main_GUI.title("Chet\'s GUI Tools")
+main_GUI.title("")
 # Sets up the size of the window
 main_GUI.minsize(350, 300)
 main_GUI.maxsize(350, 300)
@@ -25,6 +27,7 @@ main_GUI.grid_rowconfigure(2, weight=1)
 # main_GUI.grid_columnconfigure(2, weight=1)
 main_GUI.grid_rowconfigure(3, weight=1)
 # main_GUI.grid_columnconfigure(3, weight=1)
+main_GUI.grid_rowconfigure(4, weight=1)
 
 # Sets up the title label for the main GUI window
 main_title = tk.Label(main_GUI, text='Chet\'s GUI Tools', font=("Arial", 15, "bold"), relief="flat")
@@ -45,6 +48,12 @@ pdf_combiner_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="
                                       command=lambda: exec(f'{pdf_combiner.fileOperationsGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
 pdf_combiner_button.grid(row=3, column=0, sticky=tk.EW)
+
+# Sets up the button that leads to the PDF combiner GUI
+calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Calculator",
+                                      command=lambda: exec(f'{calculatorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
+                                      activebackground="#CACACA")
+calc_button.grid(row=4, column=0, sticky=tk.EW)
 
 # Called when the window is closed
 def onWindowClose():

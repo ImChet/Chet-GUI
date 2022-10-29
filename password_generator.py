@@ -49,7 +49,8 @@ def passwordGeneratorGUI():
     # Sets the Chet logo
     main_frame.iconbitmap("chet-logo.ico")
     # Sets the title of the window
-    main_frame.title("Chet\'s Password Generator")
+    # main_frame.title("Chet\'s Password Generator")
+    main_frame.title("")
     # Sets up the size of the window
     main_frame.minsize(350, 300)
     main_frame.maxsize(350, 300)

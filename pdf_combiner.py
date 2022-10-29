@@ -18,7 +18,8 @@ def fileOperationsGUI():
     # Sets the Chet logo
     main_frame.iconbitmap("chet-logo.ico")
     # Sets the title of the window
-    main_frame.title("Chet\'s PDF Combiner")
+    # main_frame.title("Chet\'s PDF Combiner")
+    main_frame.title("")
     # Sets up the size of the window
     main_frame.minsize(400, 280)
     main_frame.maxsize(400, 280)
@@ -142,37 +143,51 @@ def fileOperationsGUI():
     def openFile():
         # Prompts the user to select multiple files in the file explorer
         userfiles = askopenfilenames()
-        # Delete the choose files button
-        file_button.destroy()
-
-        nonlocal userfiles_list_cleaned
-        nonlocal userfiles_list_raw
-        nonlocal outfile
-        nonlocal filepath_label_var
-
-        # Sets the outfile with the previously obtained save directory location
-        outfile = f'{save_dir}/ChetCombined.pdf'
-        filepath_label_var.set(value=outfile)
-
-        # Loops through the chosen files
+        # Used for checking each user selected file for .pdf filetype
+        pdf_check = True
+        # Checks each user selected file for .pdf filetype
         for file in userfiles:
-            # Inserts the absolute path of each file to list for future use
-            userfiles_list_raw.insert(len(userfiles_list_raw), os.path.abspath(file))
-            # Inserts the cleaned filename of each file to list for future use
-            userfiles_list_cleaned.insert(len(userfiles_list_cleaned), os.path.basename(file)[:-4])
+            filetype = os.path.basename(file)[-4:]
+            print(f'Filetype of {file} is ({filetype})')
+            if filetype != '.pdf':
+                # If one attachment is not a .pdf, prompt user to reselect files...
+                pdf_check = False
+        # If not PDF, allow them to retry
+        if not pdf_check:
+            hint_information_var.set(value=f'One or more file(s) you selected are not a PDF.\nTry again:')
+        # If all attachments are a .pdf, proceed
+        elif pdf_check:
+            # Delete the choose files button
+            file_button.destroy()
 
-        # Loops from the cleaned filename list
-        for item in userfiles_list_cleaned:
-            # Inserts each cleaned filename into listbox1
-            listbox1.insert("end", item)
+            nonlocal userfiles_list_cleaned
+            nonlocal userfiles_list_raw
+            nonlocal outfile
+            nonlocal filepath_label_var
 
-        # Updates hint
-        hint_information_var.set(value=f'Select the order that you want your files to combine.\nFiles selected to combine: {file_selected_counter}/{len(userfiles_list_cleaned)}')
-        # Builds the new frame that houses the desired ordering of the PDF combiner
-        frame_B.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
+            # Sets the outfile with the previously obtained save directory location
+            outfile = f'{save_dir}/ChetCombined.pdf'
+            filepath_label_var.set(value=outfile)
 
-        # Binds the selection of listbox items to the onSelect function
-        listbox1.bind('<Double-Button-1>', lambda event: exec(f'{onSelect(event)}'))
+            # Loops through the chosen files
+            for file in userfiles:
+                # Inserts the absolute path of each file to list for future use
+                userfiles_list_raw.insert(len(userfiles_list_raw), os.path.abspath(file))
+                # Inserts the cleaned filename of each file to list for future use
+                userfiles_list_cleaned.insert(len(userfiles_list_cleaned), os.path.basename(file)[:-4])
+
+            # Loops from the cleaned filename list
+            for item in userfiles_list_cleaned:
+                # Inserts each cleaned filename into listbox1
+                listbox1.insert("end", item)
+
+            # Updates hint
+            hint_information_var.set(value=f'Select the order that you want your files to combine.\nFiles selected to combine: {file_selected_counter}/{len(userfiles_list_cleaned)}')
+            # Builds the new frame that houses the desired ordering of the PDF combiner
+            frame_B.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
+
+            # Binds the selection of listbox items to the onSelect function
+            listbox1.bind('<Double-Button-1>', lambda event: exec(f'{onSelect(event)}'))
 
     # The setup for the choose files button // Hidden until user selects a save directory
     file_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="Choose Files",
