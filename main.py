@@ -41,19 +41,19 @@ main_information.grid(row=1, column=0, sticky=tk.EW)
 password_generator_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Password Generator",
                                       command=lambda: exec(f'{password_generator.passwordGeneratorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
-password_generator_button.grid(row=2, column=0, sticky=tk.EW)
+password_generator_button.grid(row=2, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
 # Sets up the button that leads to the PDF combiner GUI
 pdf_combiner_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="PDF Combiner",
                                       command=lambda: exec(f'{pdf_combiner.fileOperationsGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
-pdf_combiner_button.grid(row=3, column=0, sticky=tk.EW)
+pdf_combiner_button.grid(row=3, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
 # Sets up the button that leads to the PDF combiner GUI
 calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Calculator",
                                       command=lambda: exec(f'{calculatorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
-calc_button.grid(row=4, column=0, sticky=tk.EW)
+calc_button.grid(row=4, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
 # Called when the window is closed
 def onWindowClose():
