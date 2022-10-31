@@ -49,8 +49,8 @@ pdf_combiner_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="
                                       activebackground="#CACACA")
 pdf_combiner_button.grid(row=3, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
-# Sets up the button that leads to the PDF combiner GUI
-calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Calculator",
+# Sets up the button that leads to the simple calculator GUI
+calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Simple Calculator",
                                       command=lambda: exec(f'{calculatorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
                                       activebackground="#CACACA")
 calc_button.grid(row=4, column=0, sticky=tk.NSEW, padx=5, pady=3)
