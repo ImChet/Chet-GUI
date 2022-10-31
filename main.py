@@ -55,6 +55,7 @@ calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Simple C
                                       activebackground="#CACACA")
 calc_button.grid(row=4, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
+
 # Called when the window is closed
 def onWindowClose():
     if messagebox.askyesno("Chet\'s GUI Tools", "Are you sure that you want to quit?"):
