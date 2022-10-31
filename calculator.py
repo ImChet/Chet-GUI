@@ -60,9 +60,12 @@ def calculatorGUI():
     def sqrtCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*']:
-                sqrt_of = (math.sqrt(eval(current_calculation)))
-                main_calculation_var.set(value=f'{str(sqrt_of)}')
+            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+                try:
+                    sqrt_of = (math.sqrt(eval(current_calculation)))
+                    main_calculation_var.set(value=f'{str(sqrt_of)}')
+                except SyntaxError:
+                    main_calculation_var.set(value=f'Syntax Error...')
 
     # Setting up the Square Root button
     sqrt_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="√",
@@ -74,8 +77,11 @@ def calculatorGUI():
     def squaredCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*']:
-                main_calculation_var.set(value=f'{str(eval(current_calculation)**2)}')
+            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+                try:
+                    main_calculation_var.set(value=f'{str(eval(current_calculation)**2)}')
+                except SyntaxError:
+                    main_calculation_var.set(value=f'Syntax Error...')
 
     # Setting up the Squared button
     squared_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="x^2",
@@ -287,8 +293,11 @@ def calculatorGUI():
     def equalsCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*']:
-                main_calculation_var.set(value=f'{eval(current_calculation)}')
+            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+                try:
+                    main_calculation_var.set(value=f'{eval(current_calculation)}')
+                except SyntaxError:
+                    main_calculation_var.set(value=f'Syntax Error...')
 
     # Setting up the Equals button
     equals_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="=",
