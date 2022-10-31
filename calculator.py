@@ -55,12 +55,11 @@ def calculatorGUI():
     calculations_label.grid(row=1, column=0, columnspan=4, sticky=tk.EW)
 
     # Row 2
-
     # The Square Root command that is used by the Square Root button
     def sqrtCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+            if current_calculation[-1] not in ['+', '-', '/', '*'] and current_calculation != 'Syntax Error...':
                 try:
                     sqrt_of = (math.sqrt(eval(current_calculation)))
                     main_calculation_var.set(value=f'{str(sqrt_of)}')
@@ -77,7 +76,7 @@ def calculatorGUI():
     def squaredCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+            if current_calculation[-1] not in ['+', '-', '/', '*'] and current_calculation != 'Syntax Error...':
                 try:
                     main_calculation_var.set(value=f'{str(eval(current_calculation)**2)}')
                 except SyntaxError:
@@ -102,7 +101,8 @@ def calculatorGUI():
     # The Backspace command that is used by the Backspace button
     def backspaceCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=current_calculation[:-1])
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=current_calculation[:-1])
 
     # Setting up the Backspace button
     backspace_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="←",
@@ -115,7 +115,8 @@ def calculatorGUI():
     # The Seven command that is used by the Seven button
     def sevenCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{7}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{7}')
 
     # Setting up the Seven button
     seven_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="7",
@@ -126,7 +127,8 @@ def calculatorGUI():
     # The Eight command that is used by the Eight button
     def eightCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{8}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{8}')
 
     # Setting up the Eight button
     eight_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="8",
@@ -137,7 +139,8 @@ def calculatorGUI():
     # The Nine command that is used by the Nine button
     def nineCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{9}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{9}')
 
     # Setting up the Nine button
     nine_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="9",
@@ -148,7 +151,8 @@ def calculatorGUI():
     # The Divide command that is used by the Divide button
     def divideCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}/')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}/')
 
     # Setting up the Divide button
     divide_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="/",
@@ -161,7 +165,8 @@ def calculatorGUI():
     # The Four command that is used by the Four button# Setting up the Eight button
     def fourCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{4}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{4}')
 
     # Setting up the Four button
     four_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="4",
@@ -172,7 +177,8 @@ def calculatorGUI():
     # The Five command that is used by the Five button
     def fiveCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{5}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{5}')
 
     # Setting up the Five button
     five_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="5",
@@ -183,7 +189,8 @@ def calculatorGUI():
     # The Six command that is used by the Six button
     def sixCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{6}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{6}')
 
     # Setting up the Six button
     six_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="6",
@@ -194,7 +201,8 @@ def calculatorGUI():
     # The Multiply command that is used by the Multiply button
     def multiplyCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}*')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}*')
 
     # Setting up the Multiply button
     multiply_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="x",
@@ -207,7 +215,8 @@ def calculatorGUI():
     # The One command that is used by the One button
     def oneCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{1}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{1}')
 
     # Setting up the One button
     one_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="1",
@@ -218,7 +227,8 @@ def calculatorGUI():
     # The Two command that is used by the Two button
     def twoCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{2}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{2}')
 
     # Setting up the Two button
     two_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="2",
@@ -229,7 +239,8 @@ def calculatorGUI():
     # The Three command that is used by the Three button
     def threeCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{3}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{3}')
 
     # Setting up the Three button
     three_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="3",
@@ -240,7 +251,8 @@ def calculatorGUI():
     # The Subtraction command that is used by the Subtraction button
     def subtractionCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}-')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}-')
 
     # Setting up the Subtraction button
     subtraction_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="-",
@@ -257,7 +269,8 @@ def calculatorGUI():
     # The Zero command that is used by the Zero button
     def zeroCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}{0}')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}{0}')
 
     # Setting up the Zero button
     zero_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="0",
@@ -268,7 +281,8 @@ def calculatorGUI():
     # The Decimal command that is used by the Decimal button
     def decimalCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}.')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}.')
 
     # Setting up the Decimal button
     decimal_button = tk.Button(frame_A, borderwidth=3, relief="raised", text=".",
@@ -279,7 +293,8 @@ def calculatorGUI():
     # The Addition command that is used by the Addition button# Setting up the Eight button
     def additionCommand():
         current_calculation = main_calculation_var.get()
-        main_calculation_var.set(value=f'{current_calculation}+')
+        if current_calculation != 'Syntax Error...':
+            main_calculation_var.set(value=f'{current_calculation}+')
 
     # Setting up the Addition button
     addition_button = tk.Button(frame_A, borderwidth=3, relief="raised", text="+",
@@ -293,7 +308,7 @@ def calculatorGUI():
     def equalsCommand():
         current_calculation = main_calculation_var.get()
         if current_calculation:
-            if current_calculation[-1] not in ['+', '-', '/', '*', '.']:
+            if current_calculation[-1] not in ['+', '-', '/', '*'] and current_calculation != 'Syntax Error...':
                 try:
                     main_calculation_var.set(value=f'{eval(current_calculation)}')
                 except SyntaxError:
