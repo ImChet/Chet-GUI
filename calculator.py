@@ -27,7 +27,6 @@ def calculatorGUI():
     frame_A.pack(fill=tk.BOTH, side=tk.TOP, expand=True)
 
     # Grid weight configurations
-
     frame_A.grid_rowconfigure(0, weight=0)
     frame_A.grid_rowconfigure(1, weight=1)
     frame_A.grid_rowconfigure(2, weight=1)
@@ -111,7 +110,6 @@ def calculatorGUI():
     backspace_button.grid(row=2, column=3, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
 
     # Row 3
-
     # The Seven command that is used by the Seven button
     def sevenCommand():
         current_calculation = main_calculation_var.get()
@@ -161,7 +159,6 @@ def calculatorGUI():
     divide_button.grid(row=3, column=3, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
 
     # Row 4
-
     # The Four command that is used by the Four button# Setting up the Eight button
     def fourCommand():
         current_calculation = main_calculation_var.get()
@@ -211,7 +208,6 @@ def calculatorGUI():
     multiply_button.grid(row=4, column=3, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
 
     # Row 5
-
     # The One command that is used by the One button
     def oneCommand():
         current_calculation = main_calculation_var.get()
@@ -261,7 +257,6 @@ def calculatorGUI():
     subtraction_button.grid(row=5, column=3, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
 
     # Row 6
-
     # Setting up a Blank button for aesthetic
     blank_button = tk.Button(frame_A, borderwidth=3, relief="flat", border=0)
     blank_button.grid(row=6, column=0, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
@@ -303,7 +298,6 @@ def calculatorGUI():
     addition_button.grid(row=6, column=3, columnspan=1, sticky=tk.NSEW, padx=2, pady=2)
 
     # Row 7
-
     # The Equals command that is used by the Equals button
     def equalsCommand():
         current_calculation = main_calculation_var.get()
