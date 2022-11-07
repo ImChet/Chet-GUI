@@ -4,7 +4,6 @@ from tkinter import messagebox
 
 import password_generator
 import pdf_combiner
-from calculator import calculatorGUI
 
 # Creates the main GUI window
 main_GUI = tk.Tk()
@@ -49,11 +48,9 @@ pdf_combiner_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="
                                       activebackground="#CACACA")
 pdf_combiner_button.grid(row=3, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
-# Sets up the button that leads to the simple calculator GUI
-calc_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="Simple Calculator",
-                                      command=lambda: exec(f'{calculatorGUI()}\n{main_GUI.withdraw()}'), background="#DCDCDC",
-                                      activebackground="#CACACA")
-calc_button.grid(row=4, column=0, sticky=tk.NSEW, padx=5, pady=3)
+# Sets up the new that leads to the ....
+# new_button = tk.Button(main_GUI, borderwidth=3, relief="raised", text="TEXT TO SET", command=lambda: exec(f'{GUI FUNCTION TO CALL}\n{main_GUI.withdraw()}'), background="#DCDCDC", activebackground="#CACACA")
+# new_button.grid(row=4, column=0, sticky=tk.NSEW, padx=5, pady=3)
 
 
 # Called when the window is closed
