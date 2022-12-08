@@ -148,7 +148,6 @@ def fileOperationsGUI():
         # Checks each user selected file for .pdf filetype
         for file in userfiles:
             filetype = os.path.basename(file)[-4:]
-            print(f'Filetype of {file} is ({filetype})')
             if filetype != '.pdf':
                 # If one attachment is not a .pdf, prompt user to reselect files...
                 pdf_check = False
